@@ -2,14 +2,14 @@ from flask import request
 from flask_restplus import Resource, Api
 
 from ..util.UserDTO import UserDto
-from ..service.user_service import save_new_user, get_all_users, get_user_by_id, get_user_by_email
+from ..service.user_service import save_new_user, get_all_users, get_user_by_public_id, get_user_by_email
 from app.main.util.login_filter import token_required
 
 authorizations = {
     'apikey': {
         'type': 'apiKey',
         'in': 'header',
-        'name': 'authorization'
+        'name': 'Authorization'
     }
 }
 api = UserDto.api
@@ -29,7 +29,6 @@ class UserList(Resource):
 
     @api.response(201, 'User successfully created.')
     @api.doc('create a new user')
-    @api.doc(security='apikey')
     @api.expect(_user, validate=True)
     def post(self):
         """Creates a new User """
@@ -47,7 +46,7 @@ class User(Resource):
     @api.marshal_with(_user)
     def get(self, public_id):
         """get a user given its identifier"""
-        user = get_user_by_id(public_id)
+        user = get_user_by_public_id(public_id)
         if not user:
             api.abort(404)
         else:

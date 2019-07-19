@@ -29,8 +29,12 @@ def get_all_users():
     return User.query.all()
 
 
-def get_user_by_id(public_id):
+def get_user_by_public_id(public_id):
     return User.query.filter_by(public_id=public_id).first()
+
+
+def get_user_by_id(id):
+    return User.query.filter_by(id=id).first()
 
 
 def get_user_by_email(public_id):

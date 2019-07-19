@@ -1,6 +1,9 @@
 from app.main.model.user import User
 from ..service.JWT_service import save_token
 
+import logging
+import sys
+
 
 class Auth:
     @staticmethod
@@ -67,10 +70,10 @@ class Auth:
                 response_object = {
                     'status': 'success',
                     'data': {
-                        'user_id': user.id,
                         'email': user.email,
+                        'username': user.username,
                         'admin': user.admin,
-                        'registered_on': str(user.registered_on)
+                        'public_id': user.public_id
                     }
                 }
                 return response_object, 200
